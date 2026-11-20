@@ -1,0 +1,12 @@
+.venv/
+data/
+outputs/
+*.csv
+*.csv.gz
+*.parquet
+*.duckdb
+__pycache__/
+*.joblib
+outputs/*.png
+*.joblib
+outputs/*.png

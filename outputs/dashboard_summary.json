@@ -1,0 +1,184 @@
+{
+  "notes": [
+    "Locked definitions; Rule 2 is the model label.",
+    "Rule 3 is preliminary and depends on the 72-hour start point and surveillance cultures.",
+    "Cost figures are hypothetical sensitivity scenarios.",
+    "Day-1 model uses clinical features only; demographics were excluded and tested as a sensitivity check."
+  ],
+  "rules": {
+    "cohort": {
+      "courses": 149335,
+      "patients": 44006,
+      "admissions": 54372,
+      "invalid_duration_courses": 3598,
+      "oral_vancomycin_courses": 2686
+    },
+    "rule1": {
+      "level": "patient",
+      "patients_total": 44006,
+      "patients_flagged": 6272,
+      "pct": 14.3
+    },
+    "rule2": {
+      "level": "course",
+      "all_courses_overuse": 58598,
+      "all_courses_pct": 39.2,
+      "strict_denominator": 139723,
+      "strict_overuse": 48986,
+      "strict_pct": 35.1
+    },
+    "rule3": {
+      "level": "course",
+      "negative_culture_courses": 105821,
+      "denominator_valid": 103332,
+      "overuse": 33917,
+      "pct_of_all_courses": 22.7,
+      "pct_of_negative_courses": 32.8,
+      "status": "preliminary; start point and surveillance cultures pending review"
+    },
+    "demo_sensitivity": {
+      "description": "Demo logic (prescriptions + microbiologyevents only), full data",
+      "notebook_demo_rule3_pct": 5.1,
+      "full_data_rows": 331389,
+      "full_data_rule3_pct": 7.1
+    },
+    "cost_scenarios": {
+      "status": "hypothetical sensitivity, not a guaranteed saving",
+      "overuse_courses_used": 58598,
+      "extra_days_per_course": 2.5,
+      "scenarios": {
+        "USD 110 (low scenario)": {
+          "icu_day_cost_usd": 110,
+          "total_usd": 16114450
+        },
+        "USD 500 (high scenario)": {
+          "icu_day_cost_usd": 500,
+          "total_usd": 73247500
+        }
+      }
+    }
+  },
+  "model": {
+    "split_seed": 42,
+    "test_courses": 18523,
+    "test_patients": 7014,
+    "test_prevalence": 0.346,
+    "metrics": {
+      "AUROC": 0.707,
+      "AUPRC": 0.559,
+      "Brier": 0.199
+    },
+    "top20_flag": {
+      "precision": 0.595,
+      "recall": 0.344,
+      "flagged_courses": 3705
+    },
+    "calibration": [
+      {
+        "decile": 1,
+        "n": 1853,
+        "mean_predicted": 0.084,
+        "observed": 0.101
+      },
+      {
+        "decile": 2,
+        "n": 1852,
+        "mean_predicted": 0.165,
+        "observed": 0.164
+      },
+      {
+        "decile": 3,
+        "n": 1852,
+        "mean_predicted": 0.231,
+        "observed": 0.224
+      },
+      {
+        "decile": 4,
+        "n": 1852,
+        "mean_predicted": 0.274,
+        "observed": 0.272
+      },
+      {
+        "decile": 5,
+        "n": 1853,
+        "mean_predicted": 0.309,
+        "observed": 0.296
+      },
+      {
+        "decile": 6,
+        "n": 1852,
+        "mean_predicted": 0.341,
+        "observed": 0.351
+      },
+      {
+        "decile": 7,
+        "n": 1852,
+        "mean_predicted": 0.38,
+        "observed": 0.41
+      },
+      {
+        "decile": 8,
+        "n": 1852,
+        "mean_predicted": 0.444,
+        "observed": 0.455
+      },
+      {
+        "decile": 9,
+        "n": 1852,
+        "mean_predicted": 0.539,
+        "observed": 0.523
+      },
+      {
+        "decile": 10,
+        "n": 1853,
+        "mean_predicted": 0.668,
+        "observed": 0.666
+      }
+    ],
+    "robustness": {
+      "splits": 10,
+      "auroc_mean": 0.711,
+      "auroc_sd": 0.004,
+      "auroc_min": 0.704,
+      "auroc_max": 0.716
+    },
+    "shap_grouped": [
+      {
+        "variable": "first_careunit",
+        "mean_abs_shap": 0.6332
+      },
+      {
+        "variable": "admission_location",
+        "mean_abs_shap": 0.5074
+      },
+      {
+        "variable": "hours_icu_to_abx",
+        "mean_abs_shap": 0.4975
+      },
+      {
+        "variable": "admission_type",
+        "mean_abs_shap": 0.3641
+      },
+      {
+        "variable": "antibiotic",
+        "mean_abs_shap": 0.2881
+      },
+      {
+        "variable": "missingindicator_ed_los_hours",
+        "mean_abs_shap": 0.2823
+      },
+      {
+        "variable": "hours_admit_to_icu",
+        "mean_abs_shap": 0.0622
+      },
+      {
+        "variable": "ed_los_hours",
+        "mean_abs_shap": 0.0207
+      },
+      {
+        "variable": "is_oral_vanc",
+        "mean_abs_shap": 0.0031
+      }
+    ]
+  }
+}
